@@ -36,28 +36,19 @@ import MyAccountSignIn from "./pages/Accounts/MyAccountSignIn";
 import MyAccountSignUp from "./pages/Accounts/MyAccountSignUp";
 import { useNavigate } from "react-router-dom";
 const App = () => {
-  const navigate = useNavigate();
-  const loggedinUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-  useEffect(() => {
-    if (!loggedinUser) {
-      navigate(`/MyAccountSignIn`);
-    }
-  }, []);
-
   return (
     <div>
       <Router>
         <Header />
         <Routes>
-          <Route path="/Grocery-react/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           {/* Shop pages */}
           <Route path="/Shop" element={<Shop />} />
           <Route path="/ShopGridCol3" element={<ShopGridCol3 />} />
           <Route path="/ShopListCol" element={<ShopListCol />} />
           <Route path="/ShopWishList" element={<ShopWishList />} />
           <Route path="/ShopCheckOut" element={<ShopCheckOut />} />
-          <Route path="/ShopCart" element={<ShopCart />} />
+          <Route path="/ShopCart/:id" element={<ShopCart />} />
           {/* Store pages */}
           <Route path="/StoreList" element={<StoreList />} />
           <Route path="/SingleShop" element={<SingleShop />} />

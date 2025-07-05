@@ -387,18 +387,7 @@ const MyAcconutNotification = () => {
               </li>
             </ul>
             <hr className="my-6" />
-            <div>
-              {/* nav  */}
-              <ul className="nav flex-column nav-pills nav-pills-dark">
-                {/* nav item */}
-                <li className="nav-item">
-                  <a className="nav-link " href="/Grocery-react/">
-                    <i className="fas fa-sign-out-alt me-2" />
-                    Log out
-                  </a>
-                </li>
-              </ul>
-            </div>
+
           </div>
         </div>
       </>

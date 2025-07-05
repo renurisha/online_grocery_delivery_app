@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import productimage1 from '../../images/product-img-1.jpg'
 import productimage2 from '../../images/product-img-2.jpg'
 import productimage3 from '../../images/product-img-3.jpg'
@@ -8,6 +8,11 @@ import { MagnifyingGlass } from 'react-loader-spinner'
 import ScrollToTop from "../ScrollToTop";
 
 const ShopCheckOut = () => {
+
+  const data = JSON.parse(localStorage.getItem("productData"));
+  const [address,setAddress]=useState({})
+  const [addressSubmit,setAddressSubmit]=useState(false)
+  
    // loading
    const [loaderStatus, setLoaderStatus] = useState(true);
    useEffect(() => {
@@ -93,6 +98,7 @@ const ShopCheckOut = () => {
                         </Link>
                         {/* collapse */}
                       </div>
+                      {addressSubmit && 
                       <div
                         id="flush-collapseOne"
                         className="accordion-collapse collapse show"
@@ -121,47 +127,19 @@ const ShopCheckOut = () => {
                                 {/* address */}
                                 <address>
                                   {" "}
-                                  <strong>Nitu Chauhan</strong> <br /> 3853 Coal
-                                  Road, <br />
-                                  Tannersville, Pennsylvania, 18372, USA,
+                                  <strong>{address?.first_name} {address?.last_name}</strong> <br /> 
+                                  {address?.address_1} <br />
+                                 {address?.address_2}
                                   <br />
-                                  <abbr title="Phone">P: 402-776-1106</abbr>
+                                  <abbr title="Phone">{address?.pincode}</abbr>
                                 </address>
-                                <span className="text-danger">
-                                  Default address{" "}
-                                </span>
+                                
                               </div>
                             </div>
-                            <div className="col-lg-6 col-12 mb-4">
-                              {/* input */}
-                              <div className="border p-6 rounded-3">
-                                <div className="form-check mb-4">
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="flexRadioDefault"
-                                    id="officeRadio"
-                                  />
-                                  <label
-                                    className="form-check-label text-dark"
-                                    htmlFor="officeRadio"
-                                  >
-                                    Office
-                                  </label>
-                                </div>
-                                <address>
-                                  {" "}
-                                  <strong>Nitu Chauhan</strong> <br /> 3853 Coal
-                                  Road, <br />
-                                  Tannersville, Pennsylvania, 18372, USA,
-                                  <br />
-                                  <abbr title="Phone">P: 402-776-1106</abbr>
-                                </address>
-                              </div>
-                            </div>
+
                           </div>
                         </div>
-                      </div>
+                      </div>}
                     </div>
                     {/* accordion item */}
                     <div className="accordion-item py-4">
@@ -2000,129 +1978,35 @@ const ShopCheckOut = () => {
                           <div className="row align-items-center">
                             <div className="col-2 col-md-2">
                               <img
-                                src={productimage1}
+                                src={data?.image_url}
                                 alt="Ecommerce"
                                 className="img-fluid"
                               />
                             </div>
                             <div className="col-5 col-md-5">
-                              <h6 className="mb-0">Haldiram's Sev Bhujia</h6>
+                              <h6 className="mb-0">{data?.description}</h6>
                               <span>
-                                <small className="text-muted">.98 / lb</small>
+                                <small className="text-muted">{data?.name}</small>
                               </span>
                             </div>
                             <div className="col-2 col-md-2 text-center text-muted">
                               <span>1</span>
                             </div>
                             <div className="col-3 text-lg-end text-start text-md-end col-md-3">
-                              <span className="fw-bold">$5.00</span>
+                              <span className="fw-bold">&#8377;{data?.price}</span>
                             </div>
                           </div>
                         </li>
-                        {/* list group item */}
-                        <li className="list-group-item px-4 py-3">
-                          <div className="row align-items-center">
-                            <div className="col-2 col-md-2">
-                              <img
-                                src={productimage2}
-                                alt="Ecommerce"
-                                className="img-fluid"
-                              />
-                            </div>
-                            <div className="col-5 col-md-5">
-                              <h6 className="mb-0">NutriChoice Digestive</h6>
-                              <span>
-                                <small className="text-muted">250g</small>
-                              </span>
-                            </div>
-                            <div className="col-2 col-md-2 text-center text-muted">
-                              <span>1</span>
-                            </div>
-                            <div className="col-3 text-lg-end text-start text-md-end col-md-3">
-                              <span className="fw-bold">$20.00</span>
-                              <div className="text-decoration-line-through text-muted small">
-                                $26.00
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        {/* list group item */}
-                        <li className="list-group-item px-4 py-3">
-                          <div className="row align-items-center">
-                            <div className="col-2 col-md-2">
-                              <img
-                                src={productimage3}
-                                alt="Ecommerce"
-                                className="img-fluid"
-                              />
-                            </div>
-                            <div className="col-5 col-md-5">
-                              <h6 className="mb-0">Cadbury 5 Star Chocolate</h6>
-                              <span>
-                                <small className="text-muted">1 kg</small>
-                              </span>
-                            </div>
-                            <div className="col-2 col-md-2 text-center text-muted">
-                              <span>1</span>
-                            </div>
-                            <div className="col-3 text-lg-end text-start text-md-end col-md-3">
-                              <span className="fw-bold">$15.00</span>
-                              <div className="text-decoration-line-through text-muted small">
-                                $20.00
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        {/* list group item */}
-                        <li className="list-group-item px-4 py-3">
-                          <div className="row align-items-center">
-                            <div className="col-2 col-md-2">
-                              <img
-                                src={productimage4}
-                                alt="Ecommerce"
-                                className="img-fluid"
-                              />
-                            </div>
-                            <div className="col-5 col-md-5">
-                              <h6 className="mb-0">Onion Flavour Potato</h6>
-                              <span>
-                                <small className="text-muted">250g</small>
-                              </span>
-                            </div>
-                            <div className="col-2 col-md-2 text-center text-muted">
-                              <span>1</span>
-                            </div>
-                            <div className="col-3 text-lg-end text-start text-md-end col-md-3">
-                              <span className="fw-bold">$15.00</span>
-                              <div className="text-decoration-line-through text-muted small">
-                                $20.00
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        {/* list group item */}
-                        <li className="list-group-item px-4 py-3">
-                          <div className="d-flex align-items-center justify-content-between   mb-2">
-                            <div>Item Subtotal</div>
-                            <div className="fw-bold">$70.00</div>
-                          </div>
-                          <div className="d-flex align-items-center justify-content-between  ">
-                            <div>
-                              Service Fee{" "}
-                              <i
-                                className="feather-icon icon-info text-muted"
-                                data-bs-toggle="tooltip"
-                                title="Default tooltip"
-                              />
-                            </div>
-                            <div className="fw-bold">$3.00</div>
-                          </div>
-                        </li>
+
+
+
+
                         {/* list group item */}
                         <li className="list-group-item px-4 py-3">
                           <div className="d-flex align-items-center justify-content-between fw-bold">
                             <div>Subtotal</div>
-                            <div>$73.00</div>
+                            <div>{data?.price}</div>
+                           
                           </div>
                         </li>
                       </ul>
@@ -2225,6 +2109,9 @@ const ShopCheckOut = () => {
                         placeholder="First name"
                         aria-label="First name"
                         required
+                        id="first_name"
+                        onChange={(e) => setAddress({...address,first_name:e.target.value})} 
+                        // setAddress
                       />
                     </div>
                     {/* col */}
@@ -2235,6 +2122,8 @@ const ShopCheckOut = () => {
                         placeholder="Last name"
                         aria-label="Last name"
                         required
+                        id="last_name"
+                        onChange={(e) => setAddress({...address,last_name:e.target.value})} 
                       />
                     </div>
                     {/* col */}
@@ -2243,6 +2132,8 @@ const ShopCheckOut = () => {
                         type="text"
                         className="form-control"
                         placeholder="Address Line 1"
+                        id="address_1"
+                        onChange={(e) => setAddress({...address,address_1:e.target.value})} 
                       />
                     </div>
                     <div className="col-12">
@@ -2251,6 +2142,8 @@ const ShopCheckOut = () => {
                         type="text"
                         className="form-control"
                         placeholder="Address Line 2"
+                        id="address_2"
+                        onChange={(e) => setAddress({...address,address_2:e.target.value})} 
                       />
                     </div>
                     <div className="col-12">
@@ -2259,62 +2152,23 @@ const ShopCheckOut = () => {
                         type="text"
                         className="form-control"
                         placeholder="City"
+                        id="city"
+                        onChange={(e) => setAddress({...address,city:e.target.value})} 
                       />
                     </div>
-                    <div className="col-12">
-                      {/* button */}
-                      <select className="form-select">
-                        <option selected> India</option>
-                        <option value={1}>UK</option>
-                        <option value={2}>USA</option>
-                        <option value={3}>UAE</option>
-                      </select>
-                    </div>
-                    <div className="col-12">
-                      {/* button */}
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                      >
-                        <option selected>Gujarat</option>
-                        <option value={1}>Northern Ireland</option>
-                        <option value={2}> Alaska</option>
-                        <option value={3}>Abu Dhabi</option>
-                      </select>
-                    </div>
+
+                   
                     <div className="col-12">
                       {/* button */}
                       <input
                         type="text"
                         className="form-control"
                         placeholder="Zip Code"
+                        id="pincode"
+                        onChange={(e) => setAddress({...address,pincode:e.target.value})} 
                       />
                     </div>
-                    <div className="col-12">
-                      {/* button */}
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Business Name"
-                      />
-                    </div>
-                    <div className="col-12">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue
-                          id="flexCheckDefault"
-                        />
-                        {/* label */}
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          Set as Default
-                        </label>
-                      </div>
-                    </div>
+
                     {/* button */}
                     <div className="col-12 text-end">
                       <button
@@ -2324,7 +2178,10 @@ const ShopCheckOut = () => {
                       >
                         Cancel
                       </button>
-                      <button className="btn btn-primary" type="button">
+                      <button className="btn btn-primary" onClick={(()=>{
+                        localStorage.setItem("address",JSON.stringify(address))
+                        setAddressSubmit(true)
+                      })}>
                         Save Address
                       </button>
                     </div>

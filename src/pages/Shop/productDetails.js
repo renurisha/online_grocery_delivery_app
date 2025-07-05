@@ -9,7 +9,9 @@ import { MagnifyingGlass } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 import { getItemDetails } from "../../api";
+import { useNavigate } from "react-router-dom";
 const ProductDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [data, setData] = useState({});
@@ -163,7 +165,11 @@ const ProductDetails = () => {
                                   </span>
                                 </div>
                                 {/* btn */}
-                                <div>
+                                <div
+                                  onClick={() => {
+                                    navigate(`/ShopCart/${data?.id}`);
+                                  }}
+                                >
                                   <Link
                                     to="#"
                                     className="btn btn-primary btn-sm"

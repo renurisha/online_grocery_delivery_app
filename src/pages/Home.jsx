@@ -44,6 +44,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import ProductItem from "../ProductList/ProductItem";
 import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 import { Slide, Zoom } from "react-awesome-reveal";
@@ -51,6 +52,7 @@ import { useEffect } from "react";
 // import { PulseLoader } from 'react-spinners';
 import { MagnifyingGlass } from "react-loader-spinner";
 const Home = () => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -493,22 +495,24 @@ const Home = () => {
                     </div>
                     <div className="row ">
                       {/* col */}
-                      <div className="col-lg-2 col-md-4 col-6 fade-zoom">
+                      <div className="col-lg-2 col-md-4 col-6 fade-zoom" onClick={()=>{
+                        navigate(`/Shop`);
+                      }}>
                         <Zoom>
                           <div className="text-center mb-10">
                             {/* img */}
-                            <Link to="#">
+                           
                               <img
                                 src={dairybreadeggs}
                                 alt="dairy-bread-eggs"
                                 className="card-image rounded-circle"
                               />
-                            </Link>
+                          
                             {/* text */}
                             <div className="mt-4">
                               <h5 className="fs-6 mb-0">
-                                {" "}
-                                <Link to="#" className="text-inherit">
+                              
+                                <Link to="/Shop" className="text-inherit">
                                   Dairy, Bread &amp; Eggs
                                 </Link>
                               </h5>
