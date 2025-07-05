@@ -1,11 +1,11 @@
-// react 
-import React from "react";
+// react
+import React, { useEffect } from "react";
 // css
 import "./App.css";
-// browserrouter 
+// browserrouter
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // Components
-import Header from './Component/Header';
+import Header from "./Component/Header";
 import Footer from "./Component/Footer";
 // pages
 import Home from "./pages/Home";
@@ -21,6 +21,7 @@ import ShopListCol from "./pages/Shop/ShopListCol";
 import ShopCart from "./pages/Shop/ShopCart";
 import ShopCheckOut from "./pages/Shop/ShopCheckOut";
 import ShopWishList from "./pages/Shop/ShopWishList";
+import ProductDetails from "./pages/Shop/productDetails";
 // Store pages
 import StoreList from "./pages/store/StoreList";
 import SingleShop from "./pages/store/SingleShop";
@@ -33,11 +34,21 @@ import MyAccountAddress from "./pages/Accounts/MyAccountAddress";
 import MyAccountForgetPassword from "./pages/Accounts/MyAccountForgetPassword";
 import MyAccountSignIn from "./pages/Accounts/MyAccountSignIn";
 import MyAccountSignUp from "./pages/Accounts/MyAccountSignUp";
+import { useNavigate } from "react-router-dom";
 const App = () => {
+  const navigate = useNavigate();
+  const loggedinUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  useEffect(() => {
+    if (!loggedinUser) {
+      navigate(`/MyAccountSignIn`);
+    }
+  }, []);
+
   return (
     <div>
       <Router>
-        <Header/>
+        <Header />
         <Routes>
           <Route path="/Grocery-react/" element={<Home />} />
           {/* Shop pages */}
@@ -52,11 +63,22 @@ const App = () => {
           <Route path="/SingleShop" element={<SingleShop />} />
           {/* Accounts pages */}
           <Route path="/MyAccountOrder" element={<MyAccountOrder />} />
+
+          <Route path="/ProductDetails/:id" element={<ProductDetails />} />
           <Route path="/MyAccountSetting" element={<MyAccountSetting />} />
-          <Route path="/MyAcconutNotification" element={<MyAcconutNotification />} />
-          <Route path="/MyAcconutPaymentMethod" element={<MyAcconutPaymentMethod />} />
+          <Route
+            path="/MyAcconutNotification"
+            element={<MyAcconutNotification />}
+          />
+          <Route
+            path="/MyAcconutPaymentMethod"
+            element={<MyAcconutPaymentMethod />}
+          />
           <Route path="/MyAccountAddress" element={<MyAccountAddress />} />
-          <Route path="/MyAccountForgetPassword" element={<MyAccountForgetPassword />} />
+          <Route
+            path="/MyAccountForgetPassword"
+            element={<MyAccountForgetPassword />}
+          />
           <Route path="/MyAccountSignIn" element={<MyAccountSignIn />} />
           <Route path="/MyAccountSignUp" element={<MyAccountSignUp />} />
           {/* About pages */}
@@ -65,7 +87,7 @@ const App = () => {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/AboutUs" element={<AboutUs />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </Router>
     </div>
   );
