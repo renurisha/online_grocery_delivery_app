@@ -12,26 +12,39 @@ import { getItemDetails } from "../../api";
 const ShopCart = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
   const [loaderStatus, setLoaderStatus] = useState(true);
   useEffect(() => {
-    if (id && Object.values(data).length == 0) {
-      getItemDetails(id)
-        .then((res) => {
-          console.log("responsnsnsns", res);
-          setData(res.data);
-        })
-        .catch((err) => {
-          console.error("Error:", err);
-        });
-    }
+    // if (id && Object.values(data).length == 0) {
+    //   getItemDetails(id)
+    //     .then((res) => {
+    //       console.log("responsnsnsns", res);
+    //       setData(res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.error("Error:", err);
+    //     });
+    // }
     setTimeout(() => {
       setLoaderStatus(false);
     }, 1500);
   }, [id]);
+  const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+
+  const totalPrice=(cartData)=>{
+  const total =  cartData.reduce((sum, item) => sum + item.price, 0)
+return total
+  }
+
+console.log("CartDatashopcarttttt--------------",cartData)
 
 
+const updateCart=(id)=>{
+  const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+const  updatedCard= cartData?.filter((data)=>(data.id!=id))||[]
+localStorage.setItem("cartData",JSON.stringify(updatedCard))
 
+}
   return (
     <div>
       <div>
@@ -81,7 +94,7 @@ const ShopCart = () => {
 
                     <ul className="list-group list-group-flush">
                       {/* list group */}
-                      <li className="list-group-item py-3 py-lg-0 px-0 border-top">
+{(cartData|| [])?.map((data)=>                      <li className="list-group-item py-3 py-lg-0 px-0 border-top">
                         {/* row */}
                         <div className="row align-items-center">
                           <div className="col-3 col-md-2">
@@ -96,17 +109,20 @@ const ShopCart = () => {
                             {/* title */}
                             <h6 className="mb-0">{data?.description}</h6>
                             <span>
-                              <small className="text-muted">{data?.price}</small>
+                              <small className="text-muted">&#8377;{data?.price}</small>
                             </span>
                             {/* text */}
-                            <div className="mt-2 small ">
-                              {" "}
+                            <div className="mt-2 small "  onClick={()=>{
+                              console.log("cliddkdddkd",data?.id)
+                              updateCart(data?.id)
+                            }}>
+
                               <Link
                                 to
                                 ="#!"
                                 className="text-decoration-none text-inherit"
                               >
-                                {" "}
+                               
                                 <span className="me-1 align-text-bottom">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -156,27 +172,21 @@ const ShopCart = () => {
                             </div>
                           </div>
                           {/* price */}
-                          <div className="col-2 text-lg-end text-start text-md-end col-md-2">
-                            <span className="fw-bold">$5.00</span>
-                          </div>
+
                         </div>
-                      </li>
+                      </li>)}
 
+                      {cartData.length==0 &&   <h6 className="mb-0">Your Cart is Empty</h6> }
 
+                      {cartData.length==0 &&                   <Link to="/Shop" className="btn btn-dark">
+                  Shop Now
+                  <i className="feather-icon icon-arrow-right ms-1" />
+                </Link> }
 
 
                     </ul>
                     {/* btn */}
-                    <div className="d-flex justify-content-between mt-4">
-                      <Link to
-                      ="#!" className="btn btn-primary">
-                        Continue Shopping
-                      </Link>
-                      <Link to
-                      ="#!" className="btn btn-dark">
-                        Update Cart
-                      </Link>
-                    </div>
+
                   </div>
                 </div>
                 {/* sidebar */}
@@ -194,7 +204,7 @@ const ShopCart = () => {
                             <div className="me-auto">
                               <div>Item Subtotal</div>
                             </div>
-                            <span>{data?.price}</span>
+                            <span>&#8377;{totalPrice(cartData)}</span>
                           </li>
                           {/* list group item */}
                           <li className="list-group-item d-flex justify-content-between align-items-start">
@@ -208,20 +218,20 @@ const ShopCart = () => {
                             <div className="me-auto">
                               <div className="fw-bold">Subtotal</div>
                             </div>
-                            <span className="fw-bold">{data?.total}</span>
+                            <span className="fw-bold">&#8377;{totalPrice(cartData)}</span>
                           </li>
                         </ul>
                       </div>
                       <div className="d-grid mb-1 mt-4">
                         {/* btn */}
                         <button onClick={()=>{
-localStorage.setItem("productData",JSON.stringify(data))
+// localStorage.setItem("productData",JSON.stringify(data))
 navigate(`/ShopCheckOut`);
                         }}
                           className="btn btn-primary btn-lg d-flex justify-content-between align-items-center"
 
                         >
-                          Go to Checkout <span className="fw-bold">{data?.price}</span>
+                          Go to Checkout <span className="fw-bold">&#8377;{totalPrice(cartData)}</span>
                         </button>
                       </div>
                       {/* text */}

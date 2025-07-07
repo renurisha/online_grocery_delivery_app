@@ -30,6 +30,13 @@ def read_items(
 ):
     query = db.query(models.Item)
 
+    print(
+        "searchhhdatatta",
+        search,
+        category_id,
+        type(category_id),
+    )
+
     # Apply filters
     if category_id:
         query = query.filter(models.Item.category_id == category_id)
@@ -43,7 +50,7 @@ def read_items(
         query = query.filter(models.Item.is_available == is_available)
 
     if search:
-        query = query.filter(models.Item.name.contains(search))
+        query = query.filter(models.Item.name.ilike(f"%{search}%"))
 
     items = query.offset(skip).limit(limit).all()
     return items

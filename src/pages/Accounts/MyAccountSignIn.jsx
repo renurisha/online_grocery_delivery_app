@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import signinimage from '../../images/signin-g.svg'
 import { Link } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 // import Grocerylogo from '../../images/Grocerylogo.png'
-
+import { useNavigate } from "react-router-dom";
 const MyAccountSignIn = () => {
+  const navigate = useNavigate();
+
+  const [loginDetails,setLoginDetails]=useState({})
+  // signupDetails
+
+  const signupDetailsData = JSON.parse(localStorage.getItem("signupDetails")) || [];
   return (
     <div>
       <>
@@ -62,6 +68,9 @@ const MyAccountSignIn = () => {
                           id="inputEmail4"
                           placeholder="Email"
                           required
+                          onClick={(e)=>{
+                            setLoginDetails({...loginDetails,"email":e.target.value})
+                          }}
                         />
                       </div>
                       <div className="col-12">
@@ -72,6 +81,9 @@ const MyAccountSignIn = () => {
                           id="inputPassword4"
                           placeholder="Password"
                           required
+                          onClick={(e)=>{
+                            setLoginDetails({...loginDetails,"password":e.target.value})
+                          }}
                         />
                       </div>
                       <div className="d-flex justify-content-between">
@@ -99,8 +111,17 @@ const MyAccountSignIn = () => {
                       </div>
                       {/* btn */}
                       <div className="col-12 d-grid">
-                        {" "}
-                        <button type="submit" className="btn btn-primary">
+                        
+                        <button type="submit" className="btn btn-primary" onClick={()=>{
+                          if(Object.values(loginDetails).length!=0){
+                            if(signupDetailsData?.email==loginDetails?.email && signupDetailsData?.password==loginDetails?.password){
+                              localStorage.setItem("loginDetails",JSON.stringify(loginDetails))
+                              navigate(`/Shop`);
+                            }
+
+
+                          }
+                        }}>
                           Sign In
                         </button>
                       </div>

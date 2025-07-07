@@ -23,6 +23,7 @@ function Dropdown() {
   const navigate = useNavigate();
   const [openDropdowns, setOpenDropdowns] = useState([]);
   const [allItems,setAllItems]=useState([])
+  const [search,setSearch]=useState("")
 
   const handleClick = (id) => {
     
@@ -32,6 +33,15 @@ function Dropdown() {
   };
 
 
+const searchProduct= localStorage.getItem("searchProduct")
+
+if(searchProduct){
+  setSearch(searchProduct)
+  localStorage.setItem("searchProduct","")
+}
+
+
+  console.log("search",search,"--------------------------------------------")
   const toggleDropdown = (index) => {
     if (openDropdowns.includes(index)) {
       setOpenDropdowns(openDropdowns.filter((item) => item !== index));
@@ -43,7 +53,12 @@ function Dropdown() {
      // loading
      const [loaderStatus, setLoaderStatus] = useState(true);
      useEffect(() => {
-      getAllItems()
+
+      localStorage.setItem(
+            "cartData",
+            JSON.stringify([])
+          );
+      getAllItems(...(search ? [{"search":search}]:[]))
       .then(res => {
         setAllItems(res.data);
 
@@ -55,6 +70,16 @@ function Dropdown() {
 
       
 
+
+
+       setTimeout(() => {
+         setLoaderStatus(false);
+       }, 1500);
+     }, [search]);
+
+
+
+     useEffect(()=>{
       getCategoryById()
       .then(res => {
         setAllItems(res.data);
@@ -66,10 +91,7 @@ function Dropdown() {
       });
 
 
-       setTimeout(() => {
-         setLoaderStatus(false);
-       }, 1500);
-     }, []);
+     },[])
 
      console.log("allItemsmsms",allItems)
    
@@ -126,7 +148,10 @@ color="#0aad0a"
                     <ul className="nav flex-column ms-3">
                       {dropdown.items.map((item, itemIndex) => (
                         <li className="nav-item" key={itemIndex}>
-                          <Link className="nav-link" to="#">
+                          <Link className="nav-link" to="#" onClick={()=>{
+                            setSearch(item)
+
+                          }}>
                             {item} 
                           </Link>
                         </li>
@@ -146,6 +171,10 @@ color="#0aad0a"
                   type="search"
                   className="form-control"
                   placeholder="Search by store"
+
+
+                  
+                  
                 />
               </div>
               {/* form check */}
@@ -441,7 +470,10 @@ color="#0aad0a"
 
             {/* col */}
             {allItems?.map((data)=>(
-                      <Link to="" >            <div className="col"  onClick={()=>{
+                      <Link to="" >           
+                      
+                      
+                       <div className="col"  onClick={()=>{
                         handleClick(data?.id)
                       }}>
               {/* card */}
@@ -505,7 +537,7 @@ color="#0aad0a"
                   <div className="text-warning">
                     {/* rating */}
                     <small>
-                      {" "}
+                    
                       <i className="bi bi-star-fill" />
                       <i className="bi bi-star-fill" />
                       <i className="bi bi-star-fill" />
@@ -613,13 +645,15 @@ const dropdownData = [
     title: "Dairy, Bread & Eggs",
     items: [
       "Milk",
-      "Milk Drinks",
-      "Curd & Yogurt",
-      "Eggs",
       "Bread",
+      "Cheese",
+      "Curd",
+     
+      "Eggs",
+      
       "Buns & Bakery",
       "Butter & More",
-      "Cheese",
+     
       "Paneer & Tofu",
       "Cream & Whitener",
       "Condensed Milk",

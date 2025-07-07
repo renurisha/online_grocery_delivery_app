@@ -35,6 +35,8 @@ const ProductDetails = () => {
     }, 1500);
   }, [id]);
 
+  const CartData = JSON.parse(localStorage.getItem("cartData")) || [];
+
   return (
     <div>
       <div>
@@ -167,7 +169,30 @@ const ProductDetails = () => {
                                 {/* btn */}
                                 <div
                                   onClick={() => {
-                                    navigate(`/ShopCart/${data?.id}`);
+                                    const cartREsponse =
+                                      CartData?.filter(
+                                        (cart) => cart?.id == data?.id
+                                      ) || [];
+
+                                    console.log("cartREsponse", cartREsponse);
+                                    if (cartREsponse.length == 0) {
+                                      console.log(
+                                        "cartREsponse22222",
+                                        cartREsponse
+                                      );
+                                      CartData.push(data);
+                                      localStorage.setItem(
+                                        "cartData",
+                                        JSON.stringify(CartData)
+                                      );
+
+                                      console.log(
+                                        "cartREsponse333333",
+                                        cartREsponse
+                                      );
+                                    }
+
+                                    navigate(`/ShopCart`);
                                   }}
                                 >
                                   <Link

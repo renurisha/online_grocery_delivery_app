@@ -48,7 +48,7 @@ const App = () => {
           <Route path="/ShopListCol" element={<ShopListCol />} />
           <Route path="/ShopWishList" element={<ShopWishList />} />
           <Route path="/ShopCheckOut" element={<ShopCheckOut />} />
-          <Route path="/ShopCart/:id" element={<ShopCart />} />
+          <Route path="/ShopCart" element={<ShopCart />} />
           {/* Store pages */}
           <Route path="/StoreList" element={<StoreList />} />
           <Route path="/SingleShop" element={<SingleShop />} />
